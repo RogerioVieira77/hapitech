@@ -1,0 +1,91 @@
+# =============================================================================
+# Hapitech — exemplo de stack Docker (NÃO é ficheiro usado pelo CI atual).
+# Objetivo: referência para reconstrução segura (frontend + proxy TLS + opcionais).
+#
+# Uso típico:
+#   cp .env.production.example .env   # criar a partir do doc de engenharia reversa
+#   docker compose -f infra/docker-compose.stack.example.yml --env-file .env up -d
+#
+# Variáveis sugeridas no .env:
+#   DOMAIN=app.exemplo.com
+#   ACME_EMAIL=ops@exemplo.com
+# =============================================================================
+
+name: hapitech-stack
+
+services:
+  # ---------------------------------------------------------------------------
+  # Frontend SPA (build multi-stage do Dockerfile na raiz do repositório)
+  # ---------------------------------------------------------------------------
+  hapitech-web:
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    image: hapitech-web:local
+    restart: unless-stopped
+    expose:
+      - "3000"
+    environment:
+      # O build Vite embute VITE_* no momento do docker build.
+      # Para URLs corretas em imagem, use: docker compose build --build-arg VITE_SUPABASE_URL=...
+      # ou um stage Dockerfile com ARG/ENV antes de npm run build (ver documentação).
+      NODE_ENV: production
+    networks:
+      - internal
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          'node -e "fetch(\"http://127.0.0.1:3000/\").then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"',
+        ]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+
+  # ---------------------------------------------------------------------------
+  # Proxy reverso + TLS (Let's Encrypt) — substitui Nginx/Traefik manual básico
+  # ---------------------------------------------------------------------------
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      DOMAIN: ${DOMAIN:?defina DOMAIN no .env}
+      ACME_EMAIL: ${ACME_EMAIL:?defina ACME_EMAIL no .env}
+    volumes:
+      - ./caddy/Caddyfile.example:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      hapitech-web:
+        condition: service_healthy
+    networks:
+      - internal
+      - edge
+
+  # ---------------------------------------------------------------------------
+  # Evolution API (OPCIONAL) — descomente se self-host WhatsApp no mesmo host.
+  # Requer EVO_KEY, volumes e documentação Evolution oficial da sua versão.
+  # ---------------------------------------------------------------------------
+  # evolution-api:
+  #   image: atendai/evolution-api:v2.2.0  # verificar tag suportada
+  #   restart: unless-stopped
+  #   env_file: .env.evolution
+  #   volumes:
+  #     - evolution_instances:/evolution/instances
+  #   networks:
+  #     - internal
+
+networks:
+  internal:
+    driver: bridge
+  edge:
+    driver: bridge
+
+volumes:
+  caddy_data:
+  caddy_config:
+  # evolution_instances:

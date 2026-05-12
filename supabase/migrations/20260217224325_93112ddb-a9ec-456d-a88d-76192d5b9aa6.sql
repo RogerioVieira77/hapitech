@@ -1,0 +1,1 @@
+ALTER TABLE public.ai_models ADD COLUMN IF NOT EXISTS credits_per_response integer NOT NULL DEFAULT 2;

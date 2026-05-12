@@ -1,0 +1,1 @@
+ALTER TABLE public.agents ADD COLUMN connection_id uuid REFERENCES public.wuzapi_connections(id) ON DELETE SET NULL DEFAULT NULL;

@@ -1,0 +1,47 @@
+# Exemplo de pipeline CD (NÃO ativo). Copiar para `.github/workflows/` e ajustar.
+# Pré-requisito: estender o `Dockerfile` com ARG/ENV para VITE_* antes de `npm run build`
+# (ver docs/ENGENHARIA_REVERSA_DEVOPS_DEPLOY_CICD_COMPLETA.md).
+#
+# Secrets no repositório GitHub:
+#   VITE_SUPABASE_URL, VITE_SUPABASE_PUBLISHABLE_KEY
+
+name: CD Example (Docker publish)
+
+on:
+  workflow_dispatch:
+
+env:
+  REGISTRY: ghcr.io
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      # image: ghcr.io/<owner>/<repo> em minúsculas
+      - id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ghcr.io/${{ github.repository }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          build-args: |
+            VITE_SUPABASE_URL=${{ secrets.VITE_SUPABASE_URL }}
+            VITE_SUPABASE_PUBLISHABLE_KEY=${{ secrets.VITE_SUPABASE_PUBLISHABLE_KEY }}

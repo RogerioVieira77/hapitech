@@ -1,0 +1,18 @@
+# Montado em /etc/caddy/Caddyfile pelo compose de exemplo.
+# Definir no serviço caddy: DOMAIN e ACME_EMAIL (Let's Encrypt).
+
+{
+    email {$ACME_EMAIL}
+}
+
+{$DOMAIN} {
+    encode gzip zstd
+
+    header {
+        X-Content-Type-Options nosniff
+        Referrer-Policy strict-origin-when-cross-origin
+        X-Frame-Options SAMEORIGIN
+    }
+
+    reverse_proxy hapitech-web:3000
+}

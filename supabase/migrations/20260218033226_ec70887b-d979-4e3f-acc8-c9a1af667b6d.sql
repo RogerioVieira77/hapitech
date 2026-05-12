@@ -1,0 +1,1 @@
+ALTER TABLE public.agents ADD COLUMN IF NOT EXISTS split_delay_ms integer NOT NULL DEFAULT 800;

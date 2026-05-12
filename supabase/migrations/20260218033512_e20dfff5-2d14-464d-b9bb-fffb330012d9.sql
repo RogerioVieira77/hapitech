@@ -1,0 +1,1 @@
+ALTER TABLE public.agents ADD COLUMN IF NOT EXISTS max_response_chars integer NULL DEFAULT NULL;

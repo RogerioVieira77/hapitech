@@ -1,0 +1,1 @@
+ALTER TABLE public.agents ADD COLUMN IF NOT EXISTS telegram_connection_id uuid REFERENCES public.telegram_connections(id) ON DELETE SET NULL;

@@ -1,0 +1,1 @@
+ALTER TABLE public.conversations ADD COLUMN profile_picture_url TEXT;

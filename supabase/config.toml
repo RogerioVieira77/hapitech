@@ -1,0 +1,85 @@
+project_id = "kvhtradegsostrhtzdwn"
+
+[functions.wuzapi-proxy]
+verify_jwt = false
+
+[functions.ai-models-proxy]
+verify_jwt = false
+
+[functions.agent-chat]
+verify_jwt = false
+
+[functions.whatsapp-webhook]
+verify_jwt = false
+
+[functions.telegram-webhook]
+verify_jwt = false
+
+[functions.widget-chat]
+verify_jwt = false
+
+[functions.extract-pdf]
+verify_jwt = false
+
+[functions.generate-embeddings]
+verify_jwt = false
+
+[functions.scrape-website]
+verify_jwt = false
+
+[functions.youtube-transcript]
+verify_jwt = false
+
+[functions.elevenlabs-tts]
+verify_jwt = false
+
+[functions.elevenlabs-conversation-token]
+verify_jwt = false
+
+[functions.google-calendar]
+verify_jwt = false
+
+[functions.google-oauth-token]
+verify_jwt = false
+
+[functions.calendar-availability]
+verify_jwt = false
+
+[functions.calendar-create-event]
+verify_jwt = false
+
+[functions.invite-org-member]
+verify_jwt = false
+
+[functions.accept-invite]
+verify_jwt = false
+
+[functions.create-team-user]
+verify_jwt = false
+
+[functions.check-inactivity]
+verify_jwt = false
+
+[functions.check-task-deadlines]
+verify_jwt = false
+
+[functions.clinicorp-query]
+verify_jwt = false
+
+[functions.solarmarket-query]
+verify_jwt = false
+
+[functions.asaas-checkout]
+verify_jwt = false
+
+[functions.asaas-webhook]
+verify_jwt = false
+
+[functions.sync-subscription]
+verify_jwt = false
+
+[functions.send-recovery-email]
+verify_jwt = false
+
+[functions.gmail-oauth-token]
+verify_jwt = false

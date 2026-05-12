@@ -1,0 +1,1 @@
+ALTER TABLE public.ai_models ADD CONSTRAINT ai_models_provider_id_model_id_key UNIQUE (provider_id, model_id);

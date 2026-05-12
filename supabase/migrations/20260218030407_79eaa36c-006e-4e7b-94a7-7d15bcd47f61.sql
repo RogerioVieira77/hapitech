@@ -1,0 +1,1 @@
+ALTER TABLE public.agents ADD COLUMN IF NOT EXISTS split_response_max_chars integer DEFAULT NULL;
