@@ -1,7 +1,9 @@
 # hapitechAI — Visão Geral Do Sistema
 
 **Última atualização:** maio de 2026
+
 **Público:** desenvolvedores que trabalham no projeto
+
 **Documentos relacionados:**
 
 - [001 - Visão Geral e Plano de Desenvolvimento](./001%20-%20Visão%20Geral%20e%20Plano%20de%20Desenvolvimento%20-%20hapitechAI.md)
