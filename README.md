@@ -11,7 +11,7 @@
 - [003 - Módulos e Requisitos](./docs/003%20-%20Módulos%20e%20Requisitos%20-%20hapitechAI.md)
 - [004 - Guia de Desenvolvimento](./docs/004%20-%20Guia%20de%20Desenvolvimento%20-%20hapitechAI.md)
 - [005 - Backlog e Roadmap Técnico](./docs/005%20-%20Backlog%20e%20Roadmap%20Técnico%20-%20hapitechAI.md)
-- [EXTRA - Lovable Project Info](./docs/Extra%20-%20Lovable%20Project%20Info.md
+- [EXTRA - Lovable Project Info](./docs/Extra%20-%20Lovable%20Project%20Info.md)
 
 ---
 
